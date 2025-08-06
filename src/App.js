@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function App() {
   const [message, setMessage] = useState('');
@@ -8,11 +8,11 @@ function App() {
     e.preventDefault();
     await fetch('http://localhost:8080/messages', {
       method: 'POST',
+      body: message,
+      credentials: 'include',
       headers: {
         'Content-Type': 'text/plain'
-      },
-      body: message,
-      credentials: 'include'
+      }
     });
     setMessage('');
   };
@@ -26,15 +26,10 @@ function App() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px' }}>
       <form onSubmit={handleSubmit} style={{ display: 'flex', marginBottom: '10px' }}>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          style={{ padding: '5px', marginRight: '5px' }}
-        />
-        <button type="submit" style={{ padding: '5px' }}>Submit</button>
+        <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} style={{ padding: '8px', marginRight: '10px' }} />
+        <button type="submit" style={{ padding: '8px', backgroundColor: 'lightblue' }}>Submit</button>
       </form>
-      <button onClick={handleGetMessages} style={{ padding: '5px', marginBottom: '10px' }}>Get Messages</button>
+      <button onClick={handleGetMessages} style={{ padding: '8px', backgroundColor: 'lightgreen' }}>Get Messages</button>
       <ul style={{ listStyle: 'none', padding: 0 }}>
         {messages.map((msg, index) => (
           <li key={index} style={{ marginBottom: '5px' }}>{msg}</li>
